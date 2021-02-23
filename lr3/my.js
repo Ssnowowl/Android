@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 					</ion-button>
 					<ion-button class="delete" color="danger" size="medium" rowid="${row.number}">
 						<ion-icon name="trash"></ion-icon>
-						<ion-button>`;
+						</ion-button>`;
 		list.appendChild(rowText);
 	}
 

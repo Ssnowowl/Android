@@ -1,0 +1,6 @@
+<h5 class="center-align">List of sweets</h5>
+<app-new-group></app-new-group>
+<app-group 
+		*ngFor="let group of groups; let i = index"
+		[group]="group" [grpIndex]="i">	
+</app-group>
