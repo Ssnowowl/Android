@@ -28,6 +28,24 @@ export class DataGetterService {
   },
   ]; 
 
+  private userName = '';
+
+  private users = [
+    'Admin', 'User', 'User2'
+  ];
+
+  getUser() {
+    return this.userName;
+
+  }
+
+  setUser(name: string) {
+    this.userName = name;
+  }
+
+  userExists(name: string): boolean {
+    return this.users.indexOf(name) !== -1;
+  }
   constructor() { }
 
   getGroups(): Observable<StudGroup[]> {
