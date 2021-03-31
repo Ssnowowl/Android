@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Sweets Group
+      Sweets Group  {{title}}
     </ion-title>
-    <ion-buttons slot="secondary"> {{userName}}
+    <ion-buttons slot="secondary"> ({{userName}})
       <ion-button routerLink="/login" routerDirection="root">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
@@ -23,6 +23,7 @@
 
    <app-stud-group *ngIf="showNew" [isNew]="true" (addGroup)="addGroup($event)"
    (cancelAddingGroup)="showNew=false"></app-stud-group>
+   
    <div *ngFor="let group of groups; let i = index">
    <ion-item-sliding>
      <ion-item-options side="start">
@@ -42,6 +43,14 @@
        <ion-label>{{group.number}}</ion-label>
        <ion-note slot="end">{{group.specialty}}</ion-note>
      </ion-item>
+     <ion-item-option side="end">
+          <ion-item-option color="secondary"
+                           routerLink="/students/{{group.number}}"
+                           routerDirection="forward">
+            <ion-icon name="reorder-four-oultine"></ion-icon>
+            Sweets
+          </ion-item-option>
+        </ion-item-option>
     </ion-item-sliding>
     <app-stud-group *ngIf="showEdit==i" [isNew]="false" [studentGroup]="group"></app-stud-group>
     </div>

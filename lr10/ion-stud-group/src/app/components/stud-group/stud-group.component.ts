@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import {StudGroup} from '../../service/data-getter.service';
+import {StudGroup} from '../../services/data-getter.service';
 
 @Component({
   selector: 'app-stud-group',
@@ -30,7 +30,7 @@ export class StudGroupComponent implements OnInit {
 
   addNew() {
   	if (this.isNew) {
-  		this.addGroup.emit(this.studentGroup);
+  		  this.addGroup.emit(this.studentGroup);
   	}
   }
 

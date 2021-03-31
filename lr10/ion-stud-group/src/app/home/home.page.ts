@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {DataGetterService, StudGroup} from '../service/data-getter.service';
+import {DataGetterService, StudGroup} from '../services/data-getter.service';
+import {SharedDataService} from '../services/shared-data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,19 +8,26 @@ import {DataGetterService, StudGroup} from '../service/data-getter.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
+  title = 'Sweet`s Group';
+  userName: string;
 	groups: StudGroup[];
 	showNew = false;
 	showEdit = -1;
 
-  constructor(private dataGetter: DataGetterService) {
+  constructor(private dataGetter: DataGetterService, private sharedData: SharedDataService) {
 
   	this.dataGetter.getGroups().subscribe(
   		(data) => {
   			this.groups = data;
   		}
   	);
+    this.userName = this.dataGetter.getUser();
   }
+
+  ionViewDidEnter(){
+  if(this.sharedData.getTextData()!='')
+    this.title = this.sharedData.getTextData();
+}
   add() {
   	this.showNew = true;
   }
@@ -33,5 +41,7 @@ export class HomePage {
   	this.dataGetter.addGroup(group);
   	this.showNew = false;
   }
+
+  
 
 }

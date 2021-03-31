@@ -1,0 +1,25 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title>Sweets Groups {{grpnumb}}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<ion-item *ngFor="let student of students" text-wrap>
+			<ion-icon [name]="student.gender" slot="start"></ion-icon>
+			<ion-label text-wrap>{{student.name}}</ion-label>
+			<ion-note slot="end">{{student.rating}}</ion-note>
+		</ion-item>
+	</ion-list>
+	<ion-item>
+		<ion-label position="floating">Data on page home</ion-label>
+		<ion-input type="text"[(ngModel)]="textData"></ion-input>
+	</ion-item>
+	<ion-button color="primary" class="ion-float=right" (click)="passData()">
+		<ion-icon slot="start" name="sync"></ion-icon> Comeback data
+	</ion-button>
+</ion-content> 

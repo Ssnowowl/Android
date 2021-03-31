@@ -28,6 +28,14 @@ export class DataGetterService {
   },
   ]; 
 
+  private students = [
+    {name: 'Candy Coconut', groupNumb:"Candy Crush",
+     rating:'5', code:1 },
+     {name: 'Loffles Coconut', groupNumb:"Loffles",
+     rating:'4.3', code:1},
+
+  ];
+
   private userName = '';
 
   private users = [
@@ -59,5 +67,11 @@ export class DataGetterService {
   deleteGroup(index) {
   	this.groups.splice(index, 1);
 
+  }
+
+  getStudents(groupNumber: string): Observable<any[]> {
+    return of(this.students.filter( elem => {
+      return elem.groupNumb === groupNumber;
+    }));
   }
 }
