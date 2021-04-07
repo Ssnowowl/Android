@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import{AuthGuard} from './guards/auth.guard';
 
+
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'test-http',
     pathMatch: 'full'
   },
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
     path: 'students/:grpnumb',
     loadChildren: () => import('./students/students.module').then( m => m.StudentsPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'test-http',
+    loadChildren: () => import('./test-http/test-http.module').then( m => m.TestHttpPageModule)
   },
 ];
 
