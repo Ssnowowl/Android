@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable, of } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 export interface StudGroup {
 	number: string;
@@ -12,36 +13,29 @@ export interface StudGroup {
 })
 export class DataGetterService {
 
-  private groups: StudGroup[] = [
-
-  {
-  	number: 'Candy Crush',
-  	faculty: 'Sweets',
-  	specialty: 'Candy',
-  	studentsQuantity: 34
-  },
-  {
-  	number: 'Loffles',
-  	faculty: 'Sweets',
-  	specialty: 'Waffles',
-  	studentsQuantity: 20
-  },
-  ]; 
-
-  private students = [
-    {name: 'Candy Coconut', groupNumb:"Candy Crush",
-     rating:'5', code:1 },
-     {name: 'Loffles Coconut', groupNumb:"Loffles",
-     rating:'4.3', code:1},
-
-  ];
+  baseUrl = 'http://localhost/api/';
+  groups = [];
+  students = [];
+  users = [];
 
   private userName = '';
+  private token = '';
 
-  private users = [
-    'Admin', 'User', 'User2'
-  ];
+  constructor(private http: HttpClient) { }
+  
+  checkUser (user){
+    return this.http.post<any>(this.baseUrl + '?action=login', user);
 
+  }
+
+  addGroup(group: StudGroup){
+    this.groups.push(group);
+  }
+
+  deleteGroup(index){
+    this.groups.splice(index,1);
+  }
+  
   getUser() {
     return this.userName;
 
@@ -51,27 +45,16 @@ export class DataGetterService {
     this.userName = name;
   }
 
-  userExists(name: string): boolean {
-    return this.users.indexOf(name) !== -1;
+  setToken(token: string) {
+    this.token = token;
   }
-  constructor() { }
+  
 
-  getGroups(): Observable<StudGroup[]> {
-  	return of(this.groups);
-
-  }
-
-  addGroup(group: StudGroup) {
-  	this.groups.push(group);
-  }
-  deleteGroup(index) {
-  	this.groups.splice(index, 1);
+  getGroups() {
+  	return this.http.get<any>(this.baseUrl + '?action=get-groups&token=' + this.token);
 
   }
 
-  getStudents(groupNumber: string): Observable<any[]> {
-    return of(this.students.filter( elem => {
-      return elem.groupNumb === groupNumber;
-    }));
-  }
+
+  getStudents() {}
 }
