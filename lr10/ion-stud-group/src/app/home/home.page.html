@@ -32,7 +32,7 @@
          <ion-icon name="create"></ion-icon>
          Edit
        </ion-item-option>
-       <ion-item-option color="danger" (click)="delete(i)">
+       <ion-item-option color="danger" (click)="delete(group)">
          <ion-icon name="trash"></ion-icon>
          Delete
        </ion-item-option>
@@ -45,7 +45,7 @@
      </ion-item>
      <ion-item-option side="end">
           <ion-item-option color="secondary"
-                           routerLink="/students/{{group.number}}"
+                           [routerLink]="['/students/'+ group.number, {id: group.id}]"
                            routerDirection="forward">
             <ion-icon name="reorder-four-oultine"></ion-icon>
             Sweets

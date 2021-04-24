@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {DataGetterService, StudGroup} from '../services/data-getter.service';
 import {SharedDataService} from '../services/shared-data.service';
+import {Router} from '@angular/router';
+import {FireDataGetterService} from '../service/fire-data-getter.service';
 
 @Component({
   selector: 'app-home',
@@ -8,39 +10,56 @@ import {SharedDataService} from '../services/shared-data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  title = 'Sweet`s Group';
+  groups: StudGroup[];
+  
   userName: string;
-	groups: StudGroup[];
+
 	showNew = false;
 	showEdit = -1;
 
-  constructor(private dataGetter: DataGetterService, private sharedData: SharedDataService) {
+  extraData: string;
 
-  	this.dataGetter.getGroups().subscribe(
-  		(data) => {
-  			this.groups = data;
-  		}
-  	);
+  constructor(private dataGetter: DataGetterService,
+              private router: Router,
+              private dataExchanger: DataExchangerService,
+              private fireData: FireDataGetterService) {
+
+  	// this.dataGetter.getGroups().subscribe(
+  	// 	(data) => {
+  	// 		this.groups = data;
+  	// 	}
+  	// );
+    this.fireData.getGroups().subscribe(
+      data => this.groups = data
+      );
     this.userName = this.dataGetter.getUser();
   }
 
   ionViewDidEnter(){
-  if(this.sharedData.getTextData()!='')
-    this.title = this.sharedData.getTextData();
-}
+      this.extraData = this.dataExchanger.getData('myData');
+  }
   add() {
   	this.showNew = true;
   }
 
 
-  delete(index: number) {
-  	this.dataGetter.deleteGroup(index);
+  delete(group) {
+  	this.fireData.delGroup(group);
   }
 
   addGroup(group) {
-  	this.dataGetter.addGroup(group);
+  	// this.dataGetter.addGroup(group).subscribe(
+   //    res => {
+   //      this.dataGetter.getGroups().subscribe(
+   //        (data) => {
+   //          this.groups = data;
+   //        }
+   //      );
+   //    });;
+   this.fireData.addGroup(group);
   	this.showNew = false;
   }
+
 
   
 

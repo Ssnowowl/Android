@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import {StudGroup} from '../../services/data-getter.service';
-
+import {DataGetterService, StudGroup} from '../../services/data-getter.service';
+import {FireDataGetterService} from '../../service/fire-data-getter.service';
 @Component({
   selector: 'app-stud-group',
   templateUrl: './stud-group.component.html',
@@ -14,11 +14,13 @@ export class StudGroupComponent implements OnInit {
   @Output() cancelAddingGroup = new EventEmitter();
   title: string;
 
-  constructor() { }
+  constructor(private dataGetter: DataGetterService,
+    private fireData: FireDataGetterService) { }
 
   ngOnInit() {
   	if (this.isNew) {
   		this.studentGroup = {
+        id: null,
   			number: '',
 		  	faculty: '',
 		  	specialty: '',
@@ -38,6 +40,10 @@ export class StudGroupComponent implements OnInit {
   	if (this.isNew) {
   		this.cancelAddingGroup.emit();
   	}
+  }
+
+  saveGroup() {
+    this.fireData.editGroup(this.studentGroup);
   }
 
 }

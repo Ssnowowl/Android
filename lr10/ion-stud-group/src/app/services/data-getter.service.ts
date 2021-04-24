@@ -3,6 +3,7 @@ import {Observable, of } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 export interface StudGroup {
+  id: string;
 	number: string;
 	faculty: string;
 	specialty: string;
@@ -23,19 +24,12 @@ export class DataGetterService {
 
   constructor(private http: HttpClient) { }
   
-  checkUser (user){
+  checkUser(user){
     return this.http.post<any>(this.baseUrl + '?action=login', user);
 
   }
 
-  addGroup(group: StudGroup){
-    this.groups.push(group);
-  }
-
-  deleteGroup(index){
-    this.groups.splice(index,1);
-  }
-  
+   
   getUser() {
     return this.userName;
 
@@ -55,6 +49,30 @@ export class DataGetterService {
 
   }
 
+  editGroup(group) {
+    return this.http.post<any>(
+        this.baseUrl + '?action=edit-group&token=' + this.token,
+        group
+      );
+  }
 
-  getStudents() {}
+  addGroup(group){
+    return this.http.post<any>(
+        this.baseUrl + '?action=add-group&token=' + this.token,
+        group
+      );
+  }
+
+  delGroup(group){
+    return this.http.post<any>(
+        this.baseUrl + '?action=del-group&token=' + this.token,
+        group
+      );
+  }
+
+  getStudents(id: number){
+    return this.http.get<any>(
+        this.baseUrl + '?action=get-students&group=$(id)&token=${this.token}');
+       
+  }
 }
