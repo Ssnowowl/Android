@@ -17,11 +17,9 @@ export class HomePage {
 	showNew = false;
 	showEdit = -1;
 
-  extraData: string;
 
   constructor(private dataGetter: DataGetterService,
               private router: Router,
-              private dataExchanger: DataExchangerService,
               private fireData: FireDataGetterService) {
 
   	// this.dataGetter.getGroups().subscribe(
@@ -35,9 +33,7 @@ export class HomePage {
     this.userName = this.dataGetter.getUser();
   }
 
-  ionViewDidEnter(){
-      this.extraData = this.dataExchanger.getData('myData');
-  }
+  
   add() {
   	this.showNew = true;
   }
